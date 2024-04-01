@@ -1,0 +1,43 @@
+Youtube - Data scraping
+
+1. Fetching the channel ID
+
+Node.js
+
+var https = require('https');
+
+var url = "https://www.youtube.com/@coreyms"
+
+https.get(url, function (res) {
+    var data = '';
+    res.on('data', function (chunk) {
+        data += chunk;
+    });
+    res.on('end', function () {
+        let arr = data.split('channel_id=');
+        console.log("Channel ID:", arr[1].slice(0, 24));
+    });
+}).on('error', function (e) {
+    console.log(e.message);
+});
+
+SAVE - then EXECUTING node filename.js
+
+2. The web scraping tool
+
+https://ytdt.digitalmethods.net/mod_videos_list.php
+
+Finish
+
+
+YouTube channels with IDs
+
+UCX32D3gKXENrhOXdZjWWtMA - Yoga with Kassandra
+
+UC2isDei-lrNSrgGYE4Np3PA - TATE
+
+UC-smeLB9AnOTeypr1YyjJ3A - Arte Concerts
+
+UCAuUUnT6oDeKwE6v1NGQxug - TEDS
+
+UCCezIgC97PvUuR4_gbFUs5g - @coreyms
