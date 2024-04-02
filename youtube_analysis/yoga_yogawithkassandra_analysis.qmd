@@ -3,6 +3,11 @@ title: "youtube_yoga_analysis"
 format: html
 editor: visual
 ---
+# Tasks
+##### First look into dataset
+##### insights of what is popular
+#### using of different charts
+
 
 ## Analysis - Youtube - Channel Yoga with Kassandra
 
