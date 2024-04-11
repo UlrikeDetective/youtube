@@ -25,7 +25,7 @@
     ## License
     This project is licensed under the GNU General Public License v3.0 License - see the [LICENSE](LICENSE) file for details.
     ## Badges
-    [![GitHub stars](https://img.shields.io/github/stars/Youtube)](https://github.com/Youtube/stargazers) [![GitHub forks](https://img.shields.io/github/forks/Youtube)](https://github.com/Youtube/network/members) [![GitHub issues](https://img.shields.io/github/issues/Youtube)](https://github.com/Youtube/issues) [![GitHub license](https://img.shields.io/github/license/Youtube)](https://github.com/Youtube/blob/master/LICENSE)
+    [![GitHub stars](https://img.shields.io/github/stars/UlrikeDetective/Youtube)](https://github.com/UlrikeDetective/Youtube/stargazers) [![GitHub forks](https://img.shields.io/github/forks/UlrikeDetective/Youtube)](https://github.com/UlrikeDetective/Youtube/network/members) [![GitHub issues](https://img.shields.io/github/issues/UlrikeDetective/Youtube)](https://github.com/UlrikeDetective/Youtube/issues) [![GitHub license](https://img.shields.io/github/license/UlrikeDetective/Youtube)](https://github.com/UlrikeDetective/Youtube/blob/master/LICENSE)
     ## GitHub Repository
-    [Link to GitHub repository](https://github.com/Youtube)
+    [Link to GitHub repository](https://github.com/UlrikeDetective/Youtube)
     
