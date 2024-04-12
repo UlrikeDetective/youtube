@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-## Analysis - Youtube - Channel Yoga with Kassandra
+## Analysis - Youtube - Channel Yoga with Kassandra Part one
 
 #### Data is from the Youtube Channel "Yoga with Kassandra".
 
@@ -381,6 +381,8 @@ month, view count per length of episode
 
 likeCount - most/least - likeCount & length, like&Count and Subject
 
+How is the engagement changed over the years?
+
 ```{r}
 likeCount_mean <- round(mean(yoga$likeCount), 1)
 likeCount_median <- median(yoga$likeCount)
@@ -417,6 +419,203 @@ likeCount_output_max <- sprintf(likeCount_output_format_max, subset_entries_with
 print(likeCount_output_max)
 ```
 
+```{r}
+library(dplyr)
+library(ggplot2)
+
+yoga <- yoga %>%
+  mutate(year = lubridate::year(release_date))
+
+yoga_like_mean <- yoga %>%
+  group_by(year) %>%
+  summarise(mean_count = mean(likeCount))
+
+yoga_like_median <- yoga %>%
+  group_by(year) %>%
+  summarise(median_count = median(likeCount))
+
+# Bar chart
+bar_plot_like_mean <- ggplot(yoga_like_mean, aes(x = factor(year), y = mean_count)) +
+  geom_bar(stat = "identity", fill = "#78B1E5") +
+  geom_text(aes(label = round(mean_count, 1)), vjust = -0.5, color = "darkblue", size = 3, fontface = "bold") +  
+  labs(x = "Year", y = "Mean Like Count", title = "Mean Like Count per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend() +
+  scale_y_continuous(limits = c(0, max(19000)))
+
+bar_plot_like_mean
+
+bar_plot_like_median <- ggplot(yoga_like_median, aes(x = factor(year), y = median_count)) +
+  geom_bar(stat = "identity", fill = "#bfae4a") +
+  geom_text(aes(label = round(median_count, 1)), vjust = -0.5, color = "darkblue", size = 3, fontface = "bold") +  
+  labs(x = "Year", y = "Median Like Count", title = "Median Like Count per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend() +
+  scale_y_continuous(limits = c(0, max(10000)))
+
+bar_plot_like_median
+```
+
+```{r}
+# Box plot
+box_plot_likeCount <- ggplot(yoga, aes(x = factor(year), y = likeCount)) +
+  geom_boxplot(fill = "lightpink") +
+  labs(x = "Year", y = "Like Count", title = "Like Count Distribution per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend()
+
+box_plot_likeCount
+```
+
+```{r}
+# Filter out the extreme outlier with more than 25.000 likes.
+yoga_filtered <- yoga %>%
+  filter(!(likeCount > 25000))
+
+# Create the box plot with filtered data
+box_plot_likeCount <- ggplot(yoga_filtered, aes(x = factor(year), y = likeCount)) +
+  geom_boxplot(fill = "lightpink") +
+  labs(x = "Year", y = "Like Count", title = "Like Count Distribution per Year with less than 25.000 likes") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend()
+
+box_plot_likeCount
+```
+
+```{r}
+library(ggplot2)
+
+# Filter the data to include only videos with more than 25.000 likes.
+yoga_above_25 <- yoga %>%
+  filter(likeCount > 25000)
+
+# Create a bar plot
+bar_plot_above_25 <- ggplot(yoga_above_25, aes(x = factor(year))) +
+  geom_bar(fill = "#5281B4") +
+  geom_text(stat = 'count', aes(label = after_stat(count)), vjust = -0.5, color = "darkblue", size = 5, fontface = "bold") +  # Add text labels
+  labs(x = "Year", y = "Number of Videos (>25.000 likes)", title = "Videos with More Than 25.000 likes per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend() +
+  scale_y_continuous(limits = c(0, max(25)))
+
+bar_plot_above_25
+print(paste("Videos with more than 25.000 likes:", count(yoga_above_25)))
+
+percent_above_25 <- round((count(yoga_above_25) *100) / count(yoga), 1)
+print(paste("Percentage of videos with more than 25.000 likes:", percent_above_25))
+```
+
+```{r}
+# Assuming 'yoga' is your dataframe containing the data
+yoga <- yoga %>%
+  mutate(ratio_view_like = round(viewCount / likeCount, 1))
+
+yoga <- yoga[, !colnames(yoga) %in% c("percentage_view_like", "1", "2")]
+
+yoga
+```
+
+```{r}
+yoga <- yoga %>%
+  mutate(percentage_view_like = round((likeCount * 100) / viewCount, 2))
+
+#yoga <- yoga[, !colnames(yoga) %in% c("2")]
+
+yoga
+```
+
+```{r}
+ratio_view_like_mean <- round(mean(yoga$ratio_view_like), 1)
+ratio_view_like_median <- median(yoga$ratio_view_like)
+
+print(paste("Mean ratio view/like count:", ratio_view_like_mean))
+print(paste("Median ratio view/like count:", ratio_view_like_median))
+
+percentage_view_like_mean <- round(mean(yoga$percentage_view_like), 1)
+percentage_view_like_median <- median(yoga$percentage_view_like)
+
+print(paste("Mean percentage view/like count:", percentage_view_like_mean))
+print(paste("Median percentage view/like count:", percentage_view_like_median))
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+yoga <- yoga %>%
+  mutate(year = lubridate::year(release_date))
+
+yoga_percentage_view_like_mean <- yoga %>%
+  group_by(year) %>%
+  summarise(mean_count = mean(percentage_view_like))
+
+yoga_percentage_view_like_median <- yoga %>%
+  group_by(year) %>%
+  summarise(median_count = median(percentage_view_like))
+
+# Bar chart
+bar_plot_percentage_view_like_mean <- ggplot(yoga_percentage_view_like_mean, aes(x = factor(year), y = mean_count)) +
+  geom_bar(stat = "identity", fill = "#78B1E5") +
+  geom_text(aes(label = round(mean_count, 1)), vjust = -0.5, color = "darkblue", size = 3, fontface = "bold") +  
+  labs(x = "Year", y = "Mean percentage view like", title = "Mean percentage view like per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend() +
+  scale_y_continuous(limits = c(0, max(5)))
+
+bar_plot_percentage_view_like_mean
+
+bar_percentage_view_like_median <- ggplot(yoga_percentage_view_like_median, aes(x = factor(year), y = median_count)) +
+  geom_bar(stat = "identity", fill = "#bfae4a") +
+  geom_text(aes(label = round(median_count, 1)), vjust = -0.5, color = "darkblue", size = 3, fontface = "bold") +  
+  labs(x = "Year", y = "Median percentage view like", title = "Median percentage view like per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend() +
+  scale_y_continuous(limits = c(0, max(5)))
+
+bar_percentage_view_like_median
+```
+
+```{r}
+library(ggplot2)
+
+# Create a scatter plot
+scatter_plot <- ggplot(yoga, aes(x = viewCount, y = likeCount)) +
+  geom_point(color = "#78B1E5") +
+  labs(x = "View Count", y = "Like Count", title = "Correlation between View Count and Like Count")  +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend()
+
+scatter_plot
+
+```
+
+```{r}
+library(ggplot2)
+
+# Define threshold for outliers
+viewCount_threshold <- quantile(yoga$viewCount, 0.99)  # Adjust the quantile threshold as needed
+
+# Filter out outliers
+yoga_filtered <- yoga %>%
+  filter(viewCount <= viewCount_threshold)
+
+# Calculate correlation coefficient
+correlation <- cor(yoga_filtered$viewCount, yoga_filtered$likeCount)
+
+# Create a scatter plot with filtered data and correlation line
+scatter_plot <- ggplot(yoga_filtered, aes(x = viewCount, y = likeCount)) +
+  geom_point(color = "#78B1E5") +
+  geom_smooth(method = "lm", se = FALSE, color = "red", linetype = "dashed") +
+  labs(x = "View Count", y = "Like Count", title = "Correlation between View Count and Like Count (Outliers Filtered)") +
+  annotate("text", x = max(yoga_filtered$viewCount), y = max(yoga_filtered$likeCount), 
+           label = paste("Correlation:", round(correlation, 2)), 
+           hjust = 1, vjust = 1, color = "black", size = 4) +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend()
+
+scatter_plot
+```
+
 commentCount - most/least - commentCount & length, comment&Count and Subject
 
 ```{r}
@@ -430,6 +629,199 @@ print(paste("Median comment count:", commentCount_median))
 
 print(paste("Minimum comment count:", commentCount_min))
 print(paste("Maximum comment count:", commentCount_max))
+```
+
+```{r}
+library(dplyr)
+
+# Filter the data for the year 2015
+yoga_2015 <- yoga %>%
+  filter(lubridate::year(release_date) == 2015)
+
+# Calculate mean and median comment counts for the year 2015
+commentCount_mean_2015 <- mean(yoga_2015$commentCount, na.rm = TRUE)
+commentCount_median_2015 <- median(yoga_2015$commentCount, na.rm = TRUE)
+
+# Print the mean and median
+print(paste("Mean comment count for 2015:", round(commentCount_mean_2015, 1)))
+print(paste("Median comment count for 2015:", commentCount_median_2015))
+
+# Filter the data for the year 2015
+yoga_2015 <- yoga %>%
+  filter(lubridate::year(release_date) == 2015)
+
+# Count the number of missing values for commentCount in the year 2015
+missing_count_2015 <- sum(is.na(yoga_2015$commentCount))
+
+# Print the result
+print(paste("Number of missing data for commentCount in 2015:", missing_count_2015))
+
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+yoga <- yoga %>%
+  mutate(year = lubridate::year(release_date))
+
+yoga_comment_mean <- yoga %>%
+  group_by(year) %>%
+  summarise(mean_count = mean(commentCount, na.rm = TRUE))
+
+yoga_comment_median <- yoga %>%
+  group_by(year) %>%
+  summarise(median_count = median(commentCount, na.rm = TRUE))
+
+# Bar chart
+bar_plot_comment_mean <- ggplot(yoga_comment_mean, aes(x = factor(year), y = mean_count)) +
+  geom_bar(stat = "identity", fill = "#78B1E5") +
+  geom_text(aes(label = round(mean_count, 1)), vjust = -0.5, color = "darkblue", size = 3, fontface = "bold") +  
+  labs(x = "Year", y = "Mean Comment Count", title = "Mean Comment Count per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend() +
+  scale_y_continuous(limits = c(0, max(1200)))
+
+bar_plot_comment_mean
+
+bar_plot_comment_median <- ggplot(yoga_comment_median, aes(x = factor(year), y = median_count)) +
+  geom_bar(stat = "identity", fill = "#bfae4a") +
+  geom_text(aes(label = round(median_count, 1)), vjust = -0.5, color = "darkblue", size = 3, fontface = "bold") +  
+  labs(x = "Year", y = "Median Comment Count", title = "Median Comment Count per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend() +
+  scale_y_continuous(limits = c(0, max(650)))
+
+bar_plot_comment_median
+```
+
+```{r}
+# Box plot
+box_plot_commentCount <- ggplot(yoga, aes(x = factor(year), y = commentCount)) +
+  geom_boxplot(fill = "lightpink") +
+  labs(x = "Year", y = "Comment Count", title = "Comment Count Distribution per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend()
+
+box_plot_commentCount
+```
+
+```{r}
+# Filter out the extreme outlier with more than 3.000 comments.
+yoga_filtered <- yoga %>%
+  filter(!(likeCount > 3000))
+
+# Create the box plot with filtered data
+box_plot_viewCount <- ggplot(yoga_filtered, aes(x = factor(year), y = likeCount)) +
+  geom_boxplot(fill = "lightpink") +
+  labs(x = "Year", y = "View Count", title = "View Count Distribution per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend()
+
+box_plot_viewCount
+```
+
+```{r}
+library(ggplot2)
+
+# Filter the data to include only videos with more than 3.000 comments.
+yoga_above_3000 <- yoga %>%
+  filter(commentCount > 3000)
+
+# Create a bar plot
+bar_plot_above_3000 <- ggplot(yoga_above_3000, aes(x = factor(year))) +
+  geom_bar(fill = "#5281B4") +
+  geom_text(stat = 'count', aes(label = after_stat(count)), vjust = -0.5, color = "darkblue", size = 5, fontface = "bold") +  # Add text labels
+  labs(x = "Year", y = "Number of Videos (>3.000 comments)", title = "Videos with More than 3.000 comments per Year") +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend() +
+  scale_y_continuous(limits = c(0, max(15)))
+
+bar_plot_above_3000
+print(paste("Videos with more than 3.000 comments:", count(yoga_above_3000)))
+
+percent_above_3000 <- round((count(yoga_above_3000) *100) / count(yoga), 1)
+print(paste("Percentage of videos with more than 3.000 comments:", percent_above_3000))
+```
+
+```{r}
+yoga <- yoga %>%
+  mutate(percentage_comment_like = round((commentCount * 100) / likeCount, 2))
+
+yoga <- yoga %>%
+  mutate(percentage_comment_view = round((commentCount * 100) / viewCount, 2))
+yoga
+```
+
+```{r}
+percentage_comment_like_mean <- round(mean(yoga$percentage_comment_like, na.rm = TRUE), 1)
+percentage_comment_like_median <- round(median(yoga$percentage_comment_like, na.rm = TRUE), 1)
+
+
+print(paste("Mean percentage comment/like count:", percentage_comment_like_mean))
+print(paste("Median percentage comment/like count:", percentage_comment_like_median))
+
+percentage_comment_view_mean <- round(mean(yoga$percentage_comment_view, na.rm = TRUE), 1)
+percentage_comment_view_median <- round(median(yoga$percentage_comment_view, na.rm = TRUE), 1)
+
+print(paste("Mean percentage view/comment count:", percentage_comment_view_mean))
+print(paste("Median percentage view/comment count:", percentage_comment_view_median))
+```
+
+```{r}
+library(ggplot2)
+
+viewCount_threshold <- quantile(yoga$viewCount, 0.99) 
+
+# Filter out missing or non-finite values
+yoga_filtered <- yoga %>%
+  filter(!is.na(viewCount), !is.na(commentCount), is.finite(viewCount), is.finite(commentCount)) %>%
+  filter(viewCount <= viewCount_threshold)
+
+# Calculate correlation coefficient
+correlation <- cor(yoga_filtered$viewCount, yoga_filtered$commentCount, use = "complete.obs")
+
+# Create a scatter plot with filtered data and correlation line
+scatter_plot <- ggplot(yoga_filtered, aes(x = viewCount, y = commentCount)) +
+  geom_point(color = "#78B1E5") +
+  geom_smooth(method = "lm", se = FALSE, color = "red", linetype = "dashed") +
+  labs(x = "View Count", y = "Comment Count", title = "Correlation between View Count and Comment Count \n (Outliers Filtered)") +
+  annotate("text", x = max(yoga_filtered$viewCount), y = max(yoga_filtered$commentCount), 
+           label = paste("Correlation:", round(correlation, 2)), 
+           hjust = 1, vjust = 1, color = "black", size = 4) +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend()
+
+scatter_plot
+
+```
+
+```{r}
+library(ggplot2)
+
+likeCount_threshold <- quantile(yoga$likeCount, 0.99) 
+
+# Filter out missing or non-finite values
+yoga_filtered <- yoga %>%
+  filter(!is.na(likeCount), !is.na(commentCount), is.finite(likeCount), is.finite(commentCount)) %>%
+  filter(likeCount <= likeCount_threshold)
+
+# Calculate correlation coefficient
+correlation <- cor(yoga_filtered$likeCount, yoga_filtered$commentCount, use = "complete.obs")
+
+# Create a scatter plot with filtered data and correlation line
+scatter_plot <- ggplot(yoga_filtered, aes(x = likeCount, y = commentCount)) +
+  geom_point(color = "#78B1E5") +
+  geom_smooth(method = "lm", se = FALSE, color = "red", linetype = "dashed") +
+  labs(x = "Like Count", y = "Comment Count", title = "Correlation between Like Count and Comment Count \n (Outliers Filtered)") +
+  annotate("text", x = max(yoga_filtered$likeCount), y = max(yoga_filtered$commentCount), 
+           label = paste("Correlation:", round(correlation, 2)), 
+           hjust = 1, vjust = 1, color = "black", size = 4) +
+  scale_fill_manual(values = youtube_yoga_theme) +
+  custom_yoga_theme_nolegend()
+
+scatter_plot
 ```
 
 episode duration per year, month
