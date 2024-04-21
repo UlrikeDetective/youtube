@@ -1,3 +1,4 @@
+
 # Youtube Channel Analysis
 
 ## This repository explores data insights from various YouTube channels, aiming to identify trends and patterns in their content and performance.
@@ -58,3 +59,4 @@ This project is licensed under the GNU General Public License v3.0 License - see
 [![GitHub stars](https://img.shields.io/github/stars/UlrikeDetective/Youtube)](https://github.com/UlrikeDetective/Youtube/stargazers) [![GitHub forks](https://img.shields.io/github/forks/UlrikeDetective/Youtube)](https://github.com/UlrikeDetective/Youtube/network/members) [![GitHub issues](https://img.shields.io/github/issues/UlrikeDetective/Youtube)](https://github.com/UlrikeDetective/Youtube/issues) [![GitHub license](https://img.shields.io/github/license/UlrikeDetective/Youtube)](https://github.com/UlrikeDetective/Youtube/blob/master/LICENSE)
 ## GitHub Repository
 [Link to GitHub repository](https://github.com/UlrikeDetective/Youtube)
+
