@@ -9,44 +9,34 @@
 - [youtube_icons](https://github.com/UlrikeDetective/youtube/tree/main/youtube_icons)
 - [youtube_txt](https://github.com/UlrikeDetective/youtube/tree/main/youtube_txt)
 
-### Channels in Dataset
-|                           | [TED](https://www.youtube.com/@TED)         | [Yoga with Kassandra](https://www.youtube.com/@yogawithkassandra) | [Tate](https://www.youtube.com/@Tate) | [Arte Concert](https://www.youtube.com/@arteconcert) | [Corey Schafer](https://www.youtube.com/@coreyms) |
-|---------------------------|--------------------------------------------|------------------------------------------------------------------|---------------------------------------|----------------------------------------------------|---------------------------------------------------|
-|                           | [![TED](https://yt3.googleusercontent.com/ytc/AIdro_l_fFETDQgTAl5rWb38pxJww-4kszJH_n0G4fKP1BdK-jc=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@TED) | [![Yoga with Kassandra](https://yt3.googleusercontent.com/TsBAoI6cJpx71_wYhPtRovtPcqWzNPjSqvsiGPX4uHr0W6h0D7dcTsg8A7DeUw8KwV7FinciAQ=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@yogawithkassandra) | [![Tate](https://yt3.googleusercontent.com/ytc/AIdro_l-EelVQLCBVQELspRwDsIJ-9h_8BJ4q2aa9LIaDXdu8NU=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@Tate) | [![Arte Concert](https://yt3.googleusercontent.com/5TUZRNHtROLlzHcpOnoXMjr7XM1hzNyt3Jf6x1DYFdCt5TFZr0M6N3VCNnHuyPSoflWJ1He4dF4=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@arteconcert) | [![Corey Schafer](https://yt3.googleusercontent.com/ytc/AIdro_lD6K9DGGqWttThktCDttOdlHIHWZQ7Gcdd9WRSEqYUxw=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@coreyms) |
 
 ## About the Project
 This project serves as a learning experience for web scraping, data analysis of YouTube channels, and exploring publicly available data on the platform. It began by scraping data from five selected channels:
 
-[TED Talks](https://www.youtube.com/@TED)
-Yoga with Kassandra
-Tate
-Arte Concert
-Corey Schafer
-The initial steps involved:
+#### [TED Talks](https://www.youtube.com/@TED) 
+#### [Yoga with Kassandra](https://www.youtube.com/@yogawithkassandra)
+#### [Tate](https://www.youtube.com/@Tate)
+#### [Arte Concert](https://www.youtube.com/@arteconcert)
+#### [Corey Schafer](https://www.youtube.com/@coreyms)
+[![TED](https://yt3.googleusercontent.com/ytc/AIdro_l_fFETDQgTAl5rWb38pxJww-4kszJH_n0G4fKP1BdK-jc=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@TED)  [![Yoga with Kassandra](https://yt3.googleusercontent.com/TsBAoI6cJpx71_wYhPtRovtPcqWzNPjSqvsiGPX4uHr0W6h0D7dcTsg8A7DeUw8KwV7FinciAQ=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@yogawithkassandra)  [![Tate](https://yt3.googleusercontent.com/ytc/AIdro_l-EelVQLCBVQELspRwDsIJ-9h_8BJ4q2aa9LIaDXdu8NU=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@Tate)  [![Arte Concert](https://yt3.googleusercontent.com/5TUZRNHtROLlzHcpOnoXMjr7XM1hzNyt3Jf6x1DYFdCt5TFZr0M6N3VCNnHuyPSoflWJ1He4dF4=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@arteconcert)  [![Corey Schafer](https://yt3.googleusercontent.com/ytc/AIdro_lD6K9DGGqWttThktCDttOdlHIHWZQ7Gcdd9WRSEqYUxw=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@coreyms)
 
-Data scraping using R or a suitable tool.
-Data cleaning and organization into CSV files.
+<br>
+<h4> The initial steps involved: </h4>
+
+Data scraping using R or a suitable tool. <br>
+Data cleaning and organization into CSV files. <br>
 Exploratory data analysis (primarily focusing on the Yoga with Kassandra channel using R).
-The youtube_csv folder contains the scraped data with the following fields:
 
-channelTitle
-videoId
-videoTitle
-yogaSubject (applicable to Yoga with Kassandra)
-YogaChallenge (applicable to Yoga with Kassandra)
-release_date
-release_time
-duration
-viewCount
-likeCount
-commentCount
-defaultLAudioLanguage
-videoDescription
-tags
-videoCategoryId
-videoCategoryLabel
-topicCategories
-caption
+<br>
+<h4>The youtube_csv folder contains for example the following fields:</h4>
+
+channelTitle - videoId - videoTitle <br>
+yogaSubject - YogaChallenge <br>
+release_date - release_time - duration <br>
+viewCount - likeCount - commentCount <br>
+defaultLAudioLanguage - videoDescription <br>
+tags - videoCategoryId - videoCategoryLabel <br>
+topicCategories - caption <br>
 
 
 ## Technologies Used
