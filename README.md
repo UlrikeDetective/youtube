@@ -1,6 +1,6 @@
-# Data insights about how a few selected Youtube channels are doing
+# Youtube Channel Analysis
 
-## Finding trends and patterns
+## This repository explores data insights from various YouTube channels, aiming to identify trends and patterns in their content and performance.
 
 
 ### Table of Contents
@@ -14,16 +14,50 @@
 |---------------------------|--------------------------------------------|------------------------------------------------------------------|---------------------------------------|----------------------------------------------------|---------------------------------------------------|
 |                           | [![TED](https://yt3.googleusercontent.com/ytc/AIdro_l_fFETDQgTAl5rWb38pxJww-4kszJH_n0G4fKP1BdK-jc=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@TED) | [![Yoga with Kassandra](https://yt3.googleusercontent.com/TsBAoI6cJpx71_wYhPtRovtPcqWzNPjSqvsiGPX4uHr0W6h0D7dcTsg8A7DeUw8KwV7FinciAQ=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@yogawithkassandra) | [![Tate](https://yt3.googleusercontent.com/ytc/AIdro_l-EelVQLCBVQELspRwDsIJ-9h_8BJ4q2aa9LIaDXdu8NU=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@Tate) | [![Arte Concert](https://yt3.googleusercontent.com/5TUZRNHtROLlzHcpOnoXMjr7XM1hzNyt3Jf6x1DYFdCt5TFZr0M6N3VCNnHuyPSoflWJ1He4dF4=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@arteconcert) | [![Corey Schafer](https://yt3.googleusercontent.com/ytc/AIdro_lD6K9DGGqWttThktCDttOdlHIHWZQ7Gcdd9WRSEqYUxw=s176-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@coreyms) |
 
+## About the Project
+This project serves as a learning experience for web scraping, data analysis of YouTube channels, and exploring publicly available data on the platform. It began by scraping data from five selected channels:
+
+[TED Talks](https://www.youtube.com/@TED)
+Yoga with Kassandra
+Tate
+Arte Concert
+Corey Schafer
+The initial steps involved:
+
+Data scraping using R or a suitable tool.
+Data cleaning and organization into CSV files.
+Exploratory data analysis (primarily focusing on the Yoga with Kassandra channel using R).
+The youtube_csv folder contains the scraped data with the following fields:
+
+channelTitle
+videoId
+videoTitle
+yogaSubject (applicable to Yoga with Kassandra)
+YogaChallenge (applicable to Yoga with Kassandra)
+release_date
+release_time
+duration
+viewCount
+likeCount
+commentCount
+defaultLAudioLanguage
+videoDescription
+tags
+videoCategoryId
+videoCategoryLabel
+topicCategories
+caption
 
 
-## Installation
-```
-mostly R
-```
+## Technologies Used
+
+- Primarily: R (data analysis and manipulation)Information about needed packages and libraries in the [youtube_analysis](https://github.com/UlrikeDetective/youtube/tree/main/youtube_analysis) files.
+- (Optional) Web scraping tool (depending on scraping method)
+
 ## Usage
-```
+
 learning R and doing experiements with data analytics
-```
+
 ## Contributors
 
 
