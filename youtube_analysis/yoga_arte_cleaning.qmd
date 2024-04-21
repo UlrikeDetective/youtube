@@ -32,7 +32,7 @@ skim(yoga)
 ```
 
 ```{r}
-# Assuming 'yoga' is your dataframe
+# Deleting Columns
 yoga <- yoga[, !colnames(yoga) %in% c("channelId", "publishedAt", "position", "duration", "dimension", "definition", "defaultLanguage", "thumbnail_maxres", "licensedContent", "locationDescription", "latitude", "longitude", "dislikeCount", "favoriteCount" )]
 
 head(yoga)
