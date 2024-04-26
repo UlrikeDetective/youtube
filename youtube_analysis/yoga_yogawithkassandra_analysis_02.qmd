@@ -37,7 +37,7 @@ library(skimr)
 
 ```{r, echo = FALSE}
 
-yoga <- read.csv("/youtube_yoga_with_kassandra_2024_03_16.csv")
+yoga <- read.csv2("/youtube_yoga_with_kassandra_2024_03_16_V02.csv")
 yoga
 ```
 
@@ -46,7 +46,7 @@ yoga
 ```
 
 ```{r}
-yoga <- yoga[, !colnames(yoga) %in% c("videoID", "release_time", "defaultLAudioLanguage", "videoDescription", "tags", "videoCategoryId", "videoCategoryLabel", "topicCategories", "caption")]
+yoga <- yoga[, !colnames(yoga) %in% c("videoID", "release_time", "defaultLAudioLanguage", "videoCategoryLabel")]
 colnames(yoga)
 ```
 
@@ -183,6 +183,7 @@ print(yoga_subject_comment_sum)
 
 ```{r}
 library(stringr) 
+library(dplyr)
 
 # Function to convert duration from mm:ss format to numeric seconds
 duration_to_seconds <- function(duration) {
@@ -196,14 +197,19 @@ duration_to_seconds <- function(duration) {
 # Convert duration column to numeric seconds
 yoga$duration_seconds <- sapply(yoga$duration, duration_to_seconds)
 
+# Convert duration column to numeric seconds
+yoga <- yoga %>%
+  mutate(duration_seconds = sapply(duration, duration_to_seconds))
+
 # Group the dataframe by yogaSubject and calculate the sum of duration_seconds for each group
 yoga_subject_duration_sum <- yoga %>%
   group_by(yogaSubject) %>%
-  summarise(total_duration = sum(duration_seconds)) %>%
-  arrange(desc(total_duration))
+  summarise(total_duration_seconds = sum(duration_seconds)) %>%
+  arrange(desc(total_duration_seconds))
 
 # Print the dataframe
-print(yoga_subject_duration_sum)
+# print(yoga_subject_duration_sum)
+
 ```
 
 ```{r}
@@ -230,14 +236,13 @@ yoga_subject_duration_avg <- yoga_subject_duration_sum %>%
   arrange(desc(avg_duration))
 
 print(yoga_subject_duration_avg)
-
 ```
 
 ```{r}
 seconds_to_hh_mm_ss <- function(seconds) {
   hh <- floor(seconds / 3600)
   mm <- floor((seconds %% 3600) / 60)
-  ss <- seconds %% 60
+  ss <- round(seconds %% 60)  # Round to nearest integer
   
   # Check if any of the variables is NA
   if (anyNA(c(hh, mm, ss))) {
