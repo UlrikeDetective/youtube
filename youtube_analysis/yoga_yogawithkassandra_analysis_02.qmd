@@ -30,14 +30,13 @@ library(tidyverse)
 library(dplyr)
 library(knitr)
 library(ggplot2)
-library(skimr)
 ```
 
 #### Loading csv file
 
 ```{r, echo = FALSE}
 
-yoga <- read.csv2("/youtube_yoga_with_kassandra_2024_03_16_V02.csv")
+yoga <- read.csv2("v/youtube_yoga_with_kassandra_2024_03_16_V02.csv")
 yoga
 ```
 
@@ -74,10 +73,10 @@ custom_yoga_theme_pink <- function() {
     panel.grid.minor = element_blank(),
     
     # Define the appearance of the axes
-    axis.line = element_line(color = "#e09592"),
-    axis.text = element_text(color = "#e09592"),
-    axis.title = element_text(color = "#e09592", size = 12, face = "bold.italic"),
-    axis.ticks = element_line(color = "#e09592"),
+    axis.line = element_line(color = "#b82677"),
+    axis.text = element_text(color = "#b82677"),
+    axis.title = element_text(color = "#b82677", size = 12, face = "bold.italic"),
+    axis.ticks = element_line(color = "#b82677"),
     legend.position = "none",
     
     # Define the appearance of the plot title and subtitles
@@ -100,13 +99,11 @@ custom_yoga_theme_pink <- function() {
 
 library(dplyr)
 
-# Arrange the dataframe by viewCount in descending order and select the top 10
 top_10_watched <- yoga %>%
   arrange(desc(viewCount)) %>%
   head(10) %>%
   select(viewCount, yogaSubject, YogaChallenge, release_date, duration, videoTitle)
 
-# Print the result
 print(top_10_watched)
 ```
 
@@ -207,7 +204,6 @@ yoga_subject_duration_sum <- yoga %>%
   summarise(total_duration_seconds = sum(duration_seconds)) %>%
   arrange(desc(total_duration_seconds))
 
-# Print the dataframe
 # print(yoga_subject_duration_sum)
 
 ```
@@ -261,5 +257,113 @@ yoga_subject_duration_avg <- yoga_subject_duration_avg[complete.cases(yoga_subje
 # Print the dataframe
 print(yoga_subject_duration_avg)
 
+
+```
+
+```{r}
+yoga_challenge_counts_df <- as.data.frame(table(yoga$YogaChallenge))
+
+colnames(yoga_challenge_counts_df) <- c("YogaChallenge", "counts")
+
+yoga_challenge_counts_df <- yoga_challenge_counts_df[order(-yoga_challenge_counts_df$counts), ]
+
+print(yoga_challenge_counts_df)
+```
+
+```{r}
+library(dplyr)
+
+yoga_challenge_views_sum <- yoga %>%
+  group_by(YogaChallenge) %>%
+  summarise(total_views = sum(viewCount))  %>%
+  arrange(desc(total_views))
+
+print(yoga_challenge_views_sum)
+
+yoga_challenge_like_sum <- yoga %>%
+  group_by(YogaChallenge) %>%
+  summarise(total_likes = sum(likeCount))  %>%
+  arrange(desc(total_likes))
+
+print(yoga_challenge_like_sum)
+
+library(dplyr)
+
+# Calculate the sum of non-NA commentCount for each group
+yoga_challenge_comment_sum <- yoga %>%
+  group_by(YogaChallenge) %>%
+  summarise(total_comments = sum(commentCount, na.rm = TRUE))  %>%
+  arrange(desc(total_comments))
+
+print(yoga_challenge_comment_sum)
+
+```
+
+```{r}
+library(dplyr)
+
+# Calculate the average viewCount, likeCount, and commentCount for each group
+yoga_challenge_avg_stats <- yoga %>%
+  group_by(YogaChallenge) %>%
+  summarise(avg_views = mean(viewCount),
+            avg_likes = mean(likeCount),
+            avg_comments = mean(commentCount, na.rm = TRUE)) %>%
+  arrange(desc(avg_views))
+
+print(yoga_challenge_avg_stats)
+
+```
+
+```{r}
+yoga_challenge_avg_stats <- yoga %>%
+  filter(viewCount <= 36000000) %>%  # Exclude entries with viewCount greater than 36 million
+  group_by(YogaChallenge) %>%
+  summarise(avg_views = mean(viewCount),
+            avg_likes = mean(likeCount),
+            avg_comments = mean(commentCount, na.rm = TRUE)) %>%
+  arrange(desc(avg_views))
+
+print(yoga_challenge_avg_stats)
+
+```
+
+```{r}
+library(ggplot2)
+
+# Calculate average viewCount, likeCount, and commentCount per Yoga Challenge
+average_stats <- yoga %>%
+  group_by(YogaChallenge) %>%
+  summarise(avg_viewCount = mean(viewCount, na.rm = TRUE),
+            avg_likeCount = mean(likeCount, na.rm = TRUE),
+            avg_commentCount = mean(commentCount, na.rm = TRUE))
+
+# Plotting separate bar charts for viewCount, likeCount, and commentCount with average lines
+ggplot(average_stats, aes(x = reorder(YogaChallenge, avg_viewCount), y = avg_viewCount)) +
+  geom_bar(stat = "identity", fill = "#78B1E5") +
+  labs(title = "Average View Count per Yoga Challenge",
+       x = "Yoga Challenge",
+       y = "Average View Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  custom_yoga_theme_pink() +
+  facet_wrap(~ "viewCount", scales = "free_x") +
+  scale_y_continuous(labels = scales::comma)
+
+ggplot(average_stats, aes(x = reorder(YogaChallenge, avg_likeCount), y = avg_likeCount)) +
+  geom_bar(stat = "identity", fill = "#4F5361") +
+  labs(title = "Average Like Count per Yoga Challenge",
+       x = "Yoga Challenge",
+       y = "Average Like Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  custom_yoga_theme_pink() +
+  facet_wrap(~ "likeCount", scales = "free_x")
+
+ggplot(average_stats, aes(x = reorder(YogaChallenge, avg_commentCount), y = avg_commentCount)) +
+  geom_bar(stat = "identity", fill = "#FFF9D4") +
+  labs(title = "Average Comment Count per Yoga Challenge",
+       x = "Yoga Challenge",
+       y = "Average Comment Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  custom_yoga_theme_pink() +
+  facet_wrap(~ "commentCount", scales = "free_y", labeller = labeller(NULL))
 
 ```
