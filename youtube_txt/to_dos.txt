@@ -3,4 +3,4 @@ To dos
 - publish other datasets on Kaggle
 - doing analysis with data sets
 
-- what insights can I gather from the websites
+- what insights can I gather from the youtube channels
