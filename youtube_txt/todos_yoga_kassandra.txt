@@ -9,3 +9,5 @@
 
 * Youtube Yoga - length of videos, video themes, building categories
 * use the schema form Yoga for the other analysis on the Youtube data
+
+- Finished Kassandra
