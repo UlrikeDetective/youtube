@@ -4,3 +4,6 @@ To dos
 - doing analysis with data sets
 
 - what insights can I gather from the youtube channels
+
+- TED: Wordcloud of words in Title, word cound in Titles, subject?
+
